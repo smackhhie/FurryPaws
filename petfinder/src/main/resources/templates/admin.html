@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Adoption Center Admin</title>
+  <link rel="stylesheet" type="text/css" th:href="@{../css/admin.css}">
+</head>
+<body>
+
+<h2>Welcome to the Pet Adoption Center, [[${users.getFName()}]]!</h2>
+
+<!-- Add Pet Form -->
+<form id="addPetForm">
+  <label for="petName">Pet Name:</label>
+  <input type="text" id="petName" name="petName" required>
+  <br>
+  <label for="petType">Pet Type:</label>
+  <input type="text" id="petType" name="petType" required>
+  <br>
+  <button type="button" onclick="addPet()">Add Pet</button>
+</form>
+
+<!-- Pet List -->
+<table>
+  <tr>
+    <th>Pet Name</th>
+    <th>Pet Type</th>
+    <th>Action</th>
+  </tr>
+  <!-- The table will be populated dynamically -->
+</table>
+
+<script>
+  function addPet() {
+    // Get form values
+    var petName = document.getElementById("petName").value;
+    var petType = document.getElementById("petType").value;
+
+    // Validation (add more as needed)
+    if (!petName || !petType) {
+      alert("Please fill out all fields");
+      return;
+    }
+
+    // Create a new row in the table
+    var table = document.querySelector("table");
+    var newRow = table.insertRow(-1);
+
+    // Insert cells
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+
+    // Fill cells with data
+    cell1.innerHTML = petName;
+    cell2.innerHTML = petType;
+    cell3.innerHTML = '<button onclick="deletePet(this)">Delete</button>';
+
+    // Clear form fields
+    document.getElementById("petName").value = "";
+    document.getElementById("petType").value = "";
+  }
+
+  function deletePet(button) {
+    // Delete the row containing the delete button
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  }
+</script>
+
+</body>
+</html>
